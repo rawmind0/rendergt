@@ -24,7 +24,7 @@ USAGE:
    rendergt [global options] command [command options] [arguments...]
 
 VERSION:
-   dev
+   0.0.1
 
 AUTHOR:
    Rawmind <rawmind@gmail.com>
@@ -37,6 +37,6 @@ GLOBAL OPTIONS:
    --ext value, -e value     Template files extension (default: "tmpl")
    --help, -h                show help (default: false)
    --output value, -o value  Output folder (default: "stdout")
-   --values value            Values yaml file with data to generate templates (default: "values.yanl")  (accepts multiple inputs)
+   --values value            Values yaml file with data to generate templates (default: "values.yaml")  (accepts multiple inputs)
    --version, -v             print the version (default: false)
 ```

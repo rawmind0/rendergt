@@ -12,7 +12,7 @@ import (
 
 const (
 	DefaultFileExt    = "tmpl"
-	DefaultValuesFile = "values.yanl"
+	DefaultValuesFile = "values.yaml"
 	DefaultOutputDir  = "stdout"
 )
 

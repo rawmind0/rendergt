@@ -71,7 +71,7 @@ func renderTemplate(path string, values map[string]interface{}) error {
 	outFile := filepath.Join(globalConfig.outputDir, filepath.Dir(path), tmplName[:len(tmplName)-len(filepath.Ext(tmplName))])
 	err = writeOutput(outFile, output)
 	if err != nil {
-		return fmt.Errorf("writing ouput: %v", err)
+		return fmt.Errorf("writing output: %v", err)
 	}
 	return nil
 }

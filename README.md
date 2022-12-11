@@ -14,7 +14,7 @@ rendergt is a simple utility to render go templates.
 
 ## Usage
 
-rendergt read recursively go template files, from folders passed as arguments, and render them on stdout or output folder if configured. The rendered go templates are writen following the same folder hierarchy. Multiple values files can be used and they are mergered before rendering the go templates.
+Rendergt read recursively go template files from input folder passed as arguments, rendering them on stdout or output folder if configured. The rendered go templates are writen following the same input folder hierarchy. Values can be replaced on templates using multiple values files. If multiple values are provided, they will; be merged before rendering the go templates.
 
 ```
 NAME:

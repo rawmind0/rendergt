@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/mattn/go-colorable"
 	"github.com/rawmind0/rendergt/pkg/rendergt"
@@ -83,10 +84,10 @@ func mainErr() error {
 
 func run(cli *cli.Context) error {
 	conf := &rendergt.Config{
-		OutputDir: cli.String("output"),
+		InputDir:  filepath.Clean(cli.Args().First()),
+		OutputDir: filepath.Clean(cli.String("output")),
 		FileExt:   "." + cli.String("ext"),
 		Values:    cli.StringSlice("values"),
-		InputDirs: cli.Args().Slice(),
 		Delims:    cli.String("delims"),
 	}
 	return rendergt.Run(conf)

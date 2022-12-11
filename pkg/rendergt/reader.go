@@ -14,22 +14,21 @@ func getFileList(ctx context.Context) error {
 	go func() {
 		defer close(globalConfig.fileChan)
 		defer close(done)
-		for _, file := range globalConfig.inputDirs {
-			err := filepath.WalkDir(file, func(path string, info fs.DirEntry, err error) error {
-				if err != nil {
-					return fmt.Errorf("Adding template file %s: %v", path, err)
-				}
-				if !info.IsDir() {
-					if filepath.Ext(path) == globalConfig.fileExt {
-						log.Debugf("Adding template file %s", path)
-						globalConfig.fileChan <- &path
-					}
-				}
-				return nil
-			})
+		err := filepath.WalkDir(globalConfig.InputDir, func(path string, info fs.DirEntry, err error) error {
 			if err != nil {
-				done <- fmt.Errorf("Adding template files: %v", err)
+				return fmt.Errorf("Adding template file %s: %v", path, err)
 			}
+			if info.IsDir() {
+				return nil
+			}
+			if filepath.Ext(path) == globalConfig.FileExt {
+				log.Debugf("Adding template file %s", path)
+				globalConfig.fileChan <- &path
+			}
+			return nil
+		})
+		if err != nil {
+			done <- fmt.Errorf("Adding template files: %v", err)
 		}
 	}()
 	for {

@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"text/template"
 
 	log "github.com/sirupsen/logrus"
@@ -16,7 +17,7 @@ import (
 func getValues() (map[string]interface{}, error) {
 	valuesPrefix := "Values"
 	values := map[string]interface{}{}
-	for _, file := range globalConfig.values {
+	for _, file := range globalConfig.Values {
 		log.Debugf("Reading values: %s", file)
 		if len(file) == 0 {
 			continue
@@ -36,6 +37,7 @@ func getValues() (map[string]interface{}, error) {
 }
 
 func renderTemplates(ctx context.Context) error {
+	log.Debugf("Rendering templates with delims \"%s %s\"", globalConfig.leftDelim, globalConfig.rightDelim)
 	values, err := getValues()
 	if err != nil {
 		return fmt.Errorf("Getting values: %v", err)
@@ -57,9 +59,7 @@ func renderTemplates(ctx context.Context) error {
 }
 
 func renderTemplate(path string, values map[string]interface{}) error {
-	tmplName := filepath.Base(path)
-	log.Debugf("Created template %s with delims \"%s\"-\"%s\"", path, globalConfig.leftDelim, globalConfig.rightDelim)
-	t, err := template.New(tmplName).Delims(globalConfig.leftDelim, globalConfig.rightDelim).ParseFiles(path)
+	t, err := template.New(filepath.Base(path)).Delims(globalConfig.leftDelim, globalConfig.rightDelim).ParseFiles(path)
 	if err != nil {
 		return fmt.Errorf("parsing template: %v", err)
 	}
@@ -69,7 +69,7 @@ func renderTemplate(path string, values map[string]interface{}) error {
 	if err != nil {
 		return fmt.Errorf("rendering template: %v", err)
 	}
-	outFile := filepath.Join(globalConfig.outputDir, filepath.Dir(path), tmplName[:len(tmplName)-len(filepath.Ext(tmplName))])
+	outFile := outputFile(path)
 	err = writeOutput(outFile, output)
 	if err != nil {
 		return fmt.Errorf("writing output: %v", err)
@@ -77,9 +77,15 @@ func renderTemplate(path string, values map[string]interface{}) error {
 	return nil
 }
 
+func outputFile(path string) string {
+	outFile := filepath.Base(path)
+	outPath := strings.Replace(path, globalConfig.InputDir, globalConfig.OutputDir, 1)
+	return filepath.Join(filepath.Dir(outPath), outFile[:len(outFile)-len(filepath.Ext(outFile))])
+}
+
 func writeOutput(path string, output *bytes.Buffer) error {
 	outDir := filepath.Dir(path)
-	if globalConfig.outputDir == DefaultOutputDir {
+	if globalConfig.OutputDir == DefaultOutputDir {
 		os.Stdout.Write(output.Bytes())
 		return nil
 	}

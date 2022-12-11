@@ -18,22 +18,15 @@ const (
 )
 
 var (
-	globalConfig = &config{}
+	globalConfig = &Config{}
 )
 
 type Config struct {
-	OutputDir string
-	FileExt   string
-	Values    []string
-	InputDirs []string
-	Delims    string
-}
-
-type config struct {
-	outputDir  string
-	fileExt    string
-	values     []string
-	inputDirs  []string
+	InputDir   string
+	OutputDir  string
+	FileExt    string
+	Values     []string
+	Delims     string
 	fileChan   chan *string
 	exit       chan os.Signal
 	createdDir map[string]*struct{}
@@ -42,10 +35,7 @@ type config struct {
 }
 
 func Run(conf *Config) error {
-	globalConfig.outputDir = conf.OutputDir
-	globalConfig.fileExt = conf.FileExt
-	globalConfig.values = conf.Values
-	globalConfig.inputDirs = conf.InputDirs
+	globalConfig = conf
 	globalConfig.fileChan = make(chan *string, 1)
 	globalConfig.exit = make(chan os.Signal, 1)
 	globalConfig.createdDir = map[string]*struct{}{}

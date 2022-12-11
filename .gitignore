@@ -1,0 +1,9 @@
+/.dapper
+/.cache
+/bin
+/dist
+/templates
+*.swp
+.idea
+*.yaml
+*rendergt

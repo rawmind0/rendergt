@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	Version = "dev"
+	VERSION = "dev"
 )
 
 func main() {
@@ -25,7 +25,7 @@ func main() {
 func mainErr() error {
 	app := cli.NewApp()
 	app.Name = "rendergt"
-	app.Version = Version
+	app.Version = VERSION
 	app.Usage = "rendergt [OPTIONS] <template_folders>"
 	app.Before = func(ctx *cli.Context) error {
 		if ctx.Bool("debug") {

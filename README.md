@@ -1,6 +1,6 @@
 # rendergt
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/rawmind0/tq)](https://goreportcard.com/report/github.com/rawmind0/tq)
+[![Go Report Card](https://goreportcard.com/badge/github.com/rawmind0/rendergt)](https://goreportcard.com/report/github.com/rawmind0/rendergt)
 
 rendergt is a simple utility to render go templates.
 

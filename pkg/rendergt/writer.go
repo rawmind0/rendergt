@@ -57,7 +57,9 @@ func renderTemplates(ctx context.Context) error {
 }
 
 func renderTemplate(path string, values map[string]interface{}) error {
-	t, err := template.ParseGlob(path)
+	tmplName := filepath.Base(path)
+	log.Debugf("Created template %s with delims \"%s\"-\"%s\"", path, globalConfig.leftDelim, globalConfig.rightDelim)
+	t, err := template.New(tmplName).Delims(globalConfig.leftDelim, globalConfig.rightDelim).ParseFiles(path)
 	if err != nil {
 		return fmt.Errorf("parsing template: %v", err)
 	}
@@ -67,7 +69,6 @@ func renderTemplate(path string, values map[string]interface{}) error {
 	if err != nil {
 		return fmt.Errorf("rendering template: %v", err)
 	}
-	tmplName := t.Name()
 	outFile := filepath.Join(globalConfig.outputDir, filepath.Dir(path), tmplName[:len(tmplName)-len(filepath.Ext(tmplName))])
 	err = writeOutput(outFile, output)
 	if err != nil {

@@ -14,6 +14,7 @@ const (
 	DefaultFileExt    = "tmpl"
 	DefaultValuesFile = "values.yaml"
 	DefaultOutputDir  = "stdout"
+	DefaultDelims     = "{{}}"
 )
 
 var (
@@ -25,6 +26,7 @@ type Config struct {
 	FileExt   string
 	Values    []string
 	InputDirs []string
+	Delims    string
 }
 
 type config struct {
@@ -35,6 +37,8 @@ type config struct {
 	fileChan   chan *string
 	exit       chan os.Signal
 	createdDir map[string]*struct{}
+	leftDelim  string
+	rightDelim string
 }
 
 func Run(conf *Config) error {
@@ -45,6 +49,8 @@ func Run(conf *Config) error {
 	globalConfig.fileChan = make(chan *string, 1)
 	globalConfig.exit = make(chan os.Signal, 1)
 	globalConfig.createdDir = map[string]*struct{}{}
+	globalConfig.leftDelim = conf.Delims[:len(conf.Delims)/2]
+	globalConfig.rightDelim = conf.Delims[len(conf.Delims)/2:]
 
 	return runRenderer()
 }

@@ -24,7 +24,7 @@ USAGE:
    rendergt [global options] command [command options] [arguments...]
 
 VERSION:
-   0.0.1
+   0.0.2
 
 AUTHOR:
    Rawmind <rawmind@gmail.com>
@@ -34,6 +34,7 @@ COMMANDS:
 
 GLOBAL OPTIONS:
    --debug, -d               Debug logging (default: false)
+   --delims value            Template delimiters (default: "{{}}")
    --ext value, -e value     Template files extension (default: "tmpl")
    --help, -h                show help (default: false)
    --output value, -o value  Output folder (default: "stdout")

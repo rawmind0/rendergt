@@ -37,6 +37,9 @@ func mainErr() error {
 		if len(ctx.String("values")) == 0 {
 			return fmt.Errorf("Values file required")
 		}
+		if (len(ctx.String("delims")) % 2) != 0 {
+			return fmt.Errorf("Bad delims format, try \"%s\"", rendergt.DefaultDelims)
+		}
 		return nil
 	}
 	app.Authors = []*cli.Author{
@@ -69,6 +72,11 @@ func mainErr() error {
 			Usage:   "Template files extension",
 			Value:   rendergt.DefaultFileExt,
 		},
+		&cli.StringFlag{
+			Name:  "delims",
+			Usage: "Template delimiters",
+			Value: rendergt.DefaultDelims,
+		},
 	}
 	return app.Run(os.Args)
 }
@@ -79,6 +87,7 @@ func run(cli *cli.Context) error {
 		FileExt:   "." + cli.String("ext"),
 		Values:    cli.StringSlice("values"),
 		InputDirs: cli.Args().Slice(),
+		Delims:    cli.String("delims"),
 	}
 	return rendergt.Run(conf)
 }

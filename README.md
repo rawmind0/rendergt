@@ -18,10 +18,10 @@ rendergt read recursively go template files, from folders passed as arguments, a
 
 ```
 NAME:
-   tq - tq [OPTIONS] templates
+   rendergt - rendergt [OPTIONS] <template_folders>
 
 USAGE:
-   tq [global options] command [command options] [arguments...]
+   rendergt [global options] command [command options] [arguments...]
 
 VERSION:
    dev

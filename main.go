@@ -24,9 +24,9 @@ func main() {
 
 func mainErr() error {
 	app := cli.NewApp()
-	app.Name = "tq"
+	app.Name = "rendergt"
 	app.Version = Version
-	app.Usage = "tq [OPTIONS] templates"
+	app.Usage = "rendergt [OPTIONS] <template_folders>"
 	app.Before = func(ctx *cli.Context) error {
 		if ctx.Bool("debug") {
 			log.SetLevel(log.DebugLevel)
